@@ -6,7 +6,12 @@
 package lab7_rafaeldiaz;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -55,6 +60,10 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        cb_productos = new javax.swing.JComboBox<>();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -236,15 +245,56 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
 
         Nuevo.addTab("Eliminar Cliente", jPanel3);
 
+        jButton6.setText("Eliminar");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
+
+        jButton7.setText("Modificar");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
+
+        jButton8.setText("Load");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 656, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(cb_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
+                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(132, 132, 132)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(159, 159, 159))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 416, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_productos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8))
+                .addGap(59, 59, 59)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
         Nuevo.addTab("Eliminar/Modificar Producto", jPanel4);
@@ -345,11 +395,20 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         
         try {
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_productos.getModel();
+            
             AdminProductos ap = new AdminProductos("./Productos.txt");
-            Productos p = new Productos(tf_nombre1.getText(),tf_categoria.getText(),Double.parseDouble(tf_precio.getText()),Double.parseDouble(tf_descuento.getText()));
             ap.cargarArchivo();
+            Productos p = new Productos(tf_nombre1.getText(),tf_categoria.getText(),Double.parseDouble(tf_precio.getText()),Double.parseDouble(tf_descuento.getText()));
+            modelo.addElement(p);
+            ap.setProductos(p);
+            
             ap.escribirArchivo();
         } catch (IOException ex) {}
+        tf_categoria.setText("");
+        tf_nombre1.setText("");
+        tf_precio.setText("");
+        tf_descuento.setText("");
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
@@ -358,6 +417,34 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
         modelo.removeElement(modelo.getSelectedItem());
         
     }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+
+        try {
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_productos.getModel();
+            modelo.removeElement(modelo.getSelectedItem());
+            System.out.println(ap.getListaproductos().size());
+            System.out.println(cb_productos.getSize());
+            ap.getListaproductos().remove(cb_productos.getSelectedIndex());
+            ap.escribirArchivo();
+        } catch (IOException ex) { 
+        }
+    }//GEN-LAST:event_jButton6MouseClicked
+
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+        
+        ap.cargarArchivo();
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_productos.getModel();
+        modelo.removeAllElements();
+        for (int i = 0; i < ap.getListaproductos().size(); i++) {
+            modelo.addElement(ap.getListaproductos().get(i));
+            
+        }
+    }//GEN-LAST:event_jButton8MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -397,11 +484,15 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane Nuevo;
     private javax.swing.JComboBox<String> cb_cliente;
+    private javax.swing.JComboBox<String> cb_productos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -425,4 +516,6 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JTextField tf_precio;
     private javax.swing.JPanel yes;
     // End of variables declaration//GEN-END:variables
+
+            AdminProductos ap = new AdminProductos("./Productos.txt");
 }

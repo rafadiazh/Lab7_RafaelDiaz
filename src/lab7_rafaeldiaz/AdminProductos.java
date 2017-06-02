@@ -53,7 +53,7 @@ public class AdminProductos {
 
     
 
-    public void setPersona(Productos p) {
+    public void setProductos(Productos p) {
         this.listaproductos.add(p);
     }
 
@@ -78,7 +78,6 @@ public class AdminProductos {
 
     public void cargarArchivo() {
         Scanner sc = null;
-        listaproductos = new ArrayList();
         try {
             sc = new Scanner(archivo);
             sc.useDelimiter(";");
