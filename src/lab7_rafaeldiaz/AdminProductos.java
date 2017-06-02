@@ -25,11 +25,16 @@ public class AdminProductos {
         archivo = new File(path);
     }
 
-    public ArrayList<Productos> getListaPersonas() {
+    public AdminProductos() {
+    }
+
+    
+    
+    public ArrayList<Productos> getListaproductos() {
         return listaproductos;
     }
 
-    public void setListaPersonas(ArrayList<Productos> listaPersonas) {
+    public void setListaproductos(ArrayList<Productos> listaproductos) {
         this.listaproductos = listaproductos;
     }
 
