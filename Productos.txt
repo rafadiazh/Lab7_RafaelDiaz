@@ -1,1 +1,1 @@
-Banano;fruta;10.0;0.3;Lata de Maiz;Vegetal;35.0;0.2;
+Sandia;Fruta;50.0;0.15;Lata de Maiz;Vegetal;35.0;0.2;

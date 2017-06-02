@@ -64,6 +64,10 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jd_cliente = new javax.swing.JDialog();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -316,6 +320,49 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 593, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 456, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Comprar", jPanel5);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 593, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 456, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Facturar", jPanel6);
+
+        javax.swing.GroupLayout jd_clienteLayout = new javax.swing.GroupLayout(jd_cliente.getContentPane());
+        jd_cliente.getContentPane().setLayout(jd_clienteLayout);
+        jd_clienteLayout.setHorizontalGroup(
+            jd_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_clienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+        );
+        jd_clienteLayout.setVerticalGroup(
+            jd_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_clienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -443,7 +490,20 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8MouseClicked
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
-        // TODO add your handling code here:
+        try {
+            String nombre =JOptionPane.showInputDialog("Ingrese nuevo nombre de producto");
+            String categoria =JOptionPane.showInputDialog("Ingrese nueva categoria");
+            double precio =Double.parseDouble(JOptionPane.showInputDialog("Ingrese nuevo precio de producto"));
+            double descuento =Double.parseDouble(JOptionPane.showInputDialog("Ingrese nuevo descuento de producto"));
+            ap.getListaproductos().set(cb_productos.getSelectedIndex(), new Productos(nombre,categoria,precio,descuento));
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_productos.getModel();
+            modelo.removeAllElements();
+            for (int i = 0; i < ap.getListaproductos().size(); i++) {
+            modelo.addElement(ap.getListaproductos().get(i));
+        }
+            ap.escribirArchivo();
+        } catch (IOException ex) {
+        }
     }//GEN-LAST:event_jButton7MouseClicked
 
     /**
@@ -507,6 +567,10 @@ public class Lab7_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JDialog jd_cliente;
     private javax.swing.JDialog jd_usuario;
     private javax.swing.JTextField tf_categoria;
     private javax.swing.JTextField tf_descuento;
